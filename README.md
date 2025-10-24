@@ -1,46 +1,46 @@
 # Xray MCP Server
 
-Model Context Protocol (MCP) server per integrare le API di Xray Cloud con Claude Code e altri client MCP.
+Model Context Protocol (MCP) server to integrate Xray Cloud APIs with Claude Code and other MCP clients.
 
-## Funzionalità
+## Features
 
-Questo server MCP espone strumenti per gestire test cases e test executions in Xray Cloud usando l'API GraphQL ufficiale:
+This MCP server exposes tools to manage test cases and test executions in Xray Cloud using the official GraphQL API:
 
 ### Test Cases (Test Management)
-- **create_test_case**: Crea un nuovo test case (usa GraphQL mutation `createTest`)
-- **get_test_case**: Recupera i dettagli di un test case specifico (usa GraphQL query `getTests`)
-- **delete_test_case**: Elimina un test case (usa GraphQL mutation `deleteTest`)
-- **search_test_cases**: Cerca test cases usando JQL (Jira Query Language)
-- **get_project_test_cases**: Recupera tutti i test cases di un progetto
-- **update_test_case**: ⚠️ Non supportato direttamente - usa Jira REST API per aggiornare campi standard
+- **create_test_case**: Create a new test case (uses GraphQL mutation `createTest`)
+- **get_test_case**: Retrieve details of a specific test case (uses GraphQL query `getTests`)
+- **delete_test_case**: Delete a test case (uses GraphQL mutation `deleteTest`)
+- **search_test_cases**: Search test cases using JQL (Jira Query Language)
+- **get_project_test_cases**: Retrieve all test cases for a project
+- **update_test_case**: ⚠️ Not directly supported - use Jira REST API to update standard fields
 
 ### Test Executions (Test Automation & CI/CD)
-- **create_test_execution**: Crea una nuova test execution per eseguire test
-- **get_test_execution**: Recupera dettagli di una test execution con tutti i test runs
-- **search_test_executions**: Cerca test executions usando JQL
-- **get_project_test_executions**: Recupera tutte le test executions di un progetto
-- **update_test_run_status**: Aggiorna lo stato di un test run (PASS, FAIL, ecc.)
+- **create_test_execution**: Create a new test execution to run tests
+- **get_test_execution**: Retrieve details of a test execution with all test runs
+- **search_test_executions**: Search test executions using JQL
+- **get_project_test_executions**: Retrieve all test executions for a project
+- **update_test_run_status**: Update the status of a test run (PASS, FAIL, etc.)
 
 ### Test Plans (Test Organization)
-- **create_test_plan**: Crea un nuovo test plan per organizzare test
-- **get_test_plan**: Recupera dettagli di un test plan specifico con tutti i test
-- **search_test_plans**: Cerca test plans usando JQL
-- **get_project_test_plans**: Recupera tutti i test plans di un progetto
-- **add_tests_to_test_plan**: Aggiungi test a un test plan esistente
-- **remove_tests_from_test_plan**: Rimuovi test da un test plan
+- **create_test_plan**: Create a new test plan to organize tests
+- **get_test_plan**: Retrieve details of a specific test plan with all tests
+- **search_test_plans**: Search test plans using JQL
+- **get_project_test_plans**: Retrieve all test plans for a project
+- **add_tests_to_test_plan**: Add tests to an existing test plan
+- **remove_tests_from_test_plan**: Remove tests from a test plan
 
 ### Test Sets (Test Grouping)
-- **create_test_set**: Crea un nuovo test set per raggruppare test
-- **get_test_set**: Recupera dettagli di un test set specifico con tutti i test
-- **search_test_sets**: Cerca test sets usando JQL
-- **get_project_test_sets**: Recupera tutti i test sets di un progetto
-- **add_tests_to_test_set**: Aggiungi test a un test set esistente
-- **remove_tests_from_test_set**: Rimuovi test da un test set
+- **create_test_set**: Create a new test set to group tests
+- **get_test_set**: Retrieve details of a specific test set with all tests
+- **search_test_sets**: Search test sets using JQL
+- **get_project_test_sets**: Retrieve all test sets for a project
+- **add_tests_to_test_set**: Add tests to an existing test set
+- **remove_tests_from_test_set**: Remove tests from a test set
 
-## Prerequisiti
+## Prerequisites
 
-- Node.js 18 o superiore
-- Credenziali API di Xray Cloud (Client ID e Client Secret)
+- Node.js 18 or higher
+- Xray Cloud API credentials (Client ID and Client Secret)
 
 ## Testing
 
@@ -62,33 +62,33 @@ npm test
 
 For detailed testing documentation, see [TESTING.md](./TESTING.md)
 
-## Installazione
+## Installation
 
-1. Clona o scarica questo repository
-2. Installa le dipendenze:
+1. Clone or download this repository
+2. Install dependencies:
 
 ```bash
 npm install
 ```
 
-3. Compila il progetto:
+3. Build the project:
 
 ```bash
 npm run build
 ```
 
-### Come ottenere le credenziali API
+### How to Obtain API Credentials
 
-1. Vai su https://xray.cloud.getxray.app/
-2. Naviga in **Settings** → **API Keys**
-3. Clicca su **Create API Key**
-4. Copia il Client ID e il Client Secret generati
+1. Go to https://xray.cloud.getxray.app/
+2. Navigate to **Settings** → **API Keys**
+3. Click on **Create API Key**
+4. Copy the generated Client ID and Client Secret
 
-## Utilizzo
+## Usage
 
-### Configurazione in Claude Code
+### Configuration in Claude Code
 
-Per usare questo server MCP con Claude Code, aggiungi la seguente configurazione al tuo file di configurazione MCP (solitamente `~/Library/Application Support/Claude/claude_desktop_config.json` su macOS):
+To use this MCP server with Claude Code, add the following configuration to your MCP configuration file (typically `~/Library/Application Support/Claude/claude_desktop_config.json` on macOS):
 
 ```json
 {
@@ -105,28 +105,28 @@ Per usare questo server MCP con Claude Code, aggiungi la seguente configurazione
 }
 ```
 
-**Importante:** Sostituisci:
-- `/path/to/xray-mcp` con il percorso assoluto del progetto (es. `/Users/manuel/repositories/xray-mcp`)
-- `your_client_id` e `your_client_secret` con le tue credenziali Xray Cloud
+**Important:** Replace:
+- `/path/to/xray-mcp` with the absolute path to the project (e.g., `/Users/manuel/repositories/xray-mcp`)
+- `your_client_id` and `your_client_secret` with your Xray Cloud credentials
 
-### Test locale
+### Local Testing
 
-Per testare il server in modalità di sviluppo:
+To test the server in development mode:
 
 ```bash
-# Imposta le variabili d'ambiente
+# Set environment variables
 export XRAY_CLIENT_ID="your_client_id"
 export XRAY_CLIENT_SECRET="your_client_secret"
 
-# Esegui il server
+# Run the server
 npm run dev
 ```
 
-## Esempi di utilizzo
+## Usage Examples
 
 ### Test Cases
 
-#### Creare un test case
+#### Create a Test Case
 
 ```json
 {
@@ -139,7 +139,7 @@ npm run dev
 }
 ```
 
-#### Cercare test cases
+#### Search Test Cases
 
 ```json
 {
@@ -148,7 +148,7 @@ npm run dev
 }
 ```
 
-#### Recuperare test cases di un progetto
+#### Retrieve Project Test Cases
 
 ```json
 {
@@ -159,7 +159,7 @@ npm run dev
 
 ### Test Executions
 
-#### Creare una test execution
+#### Create a Test Execution
 
 ```json
 {
@@ -171,7 +171,7 @@ npm run dev
 }
 ```
 
-#### Recuperare una test execution
+#### Retrieve a Test Execution
 
 ```json
 {
@@ -179,7 +179,7 @@ npm run dev
 }
 ```
 
-#### Aggiornare lo stato di un test run
+#### Update Test Run Status
 
 ```json
 {
@@ -188,7 +188,7 @@ npm run dev
 }
 ```
 
-#### Cercare test executions recenti
+#### Search Recent Test Executions
 
 ```json
 {
@@ -197,75 +197,63 @@ npm run dev
 }
 ```
 
-## Struttura del progetto
+## Project Structure
 
 ```
 xray-mcp/
 ├── src/
-│   ├── index.ts           # Server MCP principale
-│   └── xray-client.ts     # Client per le API di Xray Cloud
-├── dist/                  # File compilati (generati dopo build)
-├── .env.example           # Template per le variabili d'ambiente
+│   ├── index.ts           # Main MCP server
+│   └── xray-client.ts     # Client for Xray Cloud APIs
+├── dist/                  # Compiled files (generated after build)
+├── .env.example           # Template for environment variables
 ├── .gitignore
 ├── package.json
 ├── tsconfig.json
 └── README.md
 ```
 
-## API Xray Cloud
+## Xray Cloud APIs
 
-Questo server utilizza le seguenti API di Xray Cloud:
+This server uses the following Xray Cloud APIs:
 
-- **Authentication**: `POST /api/v1/authenticate` (token valido 24 ore)
+- **Authentication**: `POST /api/v1/authenticate` (token valid for 24 hours)
 - **GraphQL Endpoint**: `POST /api/v2/graphql`
-  - **Test Queries**: `getTests` - Recupera test usando JQL
-  - **Test Mutations**: `createTest`, `deleteTest` - Crea/elimina test
-  - **Test Execution Queries**: `getTestExecutions` - Recupera executions usando JQL
-  - **Test Execution Mutations**: `createTestExecution`, `updateTestRunStatus` - Gestisce executions e risultati
-  - **Test Plan Queries**: `getTestPlans` - Recupera test plans usando JQL
-  - **Test Plan Mutations**: `createTestPlan`, `addTestsToTestPlan`, `removeTestsFromTestPlan` - Gestisce test plans
-  - **Test Set Queries**: `getTestSets` - Recupera test sets usando JQL
-  - **Test Set Mutations**: `createTestSet`, `addTestsToTestSet`, `removeTestsFromTestSet` - Gestisce test sets
+  - **Test Queries**: `getTests` - Retrieve tests using JQL
+  - **Test Mutations**: `createTest`, `deleteTest` - Create/delete tests
+  - **Test Execution Queries**: `getTestExecutions` - Retrieve executions using JQL
+  - **Test Execution Mutations**: `createTestExecution`, `updateTestRunStatus` - Manage executions and results
+  - **Test Plan Queries**: `getTestPlans` - Retrieve test plans using JQL
+  - **Test Plan Mutations**: `createTestPlan`, `addTestsToTestPlan`, `removeTestsFromTestPlan` - Manage test plans
+  - **Test Set Queries**: `getTestSets` - Retrieve test sets using JQL
+  - **Test Set Mutations**: `createTestSet`, `addTestsToTestSet`, `removeTestsFromTestSet` - Manage test sets
 
-Per la documentazione completa delle API, visita:
+For complete API documentation, visit:
 - GraphQL API: https://docs.getxray.app/display/XRAYCLOUD/GraphQL+API
-- Schema GraphQL: https://us.xray.cloud.getxray.app/doc/graphql/
+- GraphQL Schema: https://us.xray.cloud.getxray.app/doc/graphql/
 - REST API: https://docs.getxray.app/display/XRAYCLOUD/REST+API
-
-## Sviluppo futuro
-
-Funzionalità pianificate per future versioni:
-
-- [x] Gestione Test Executions ✅ (implementato)
-- [x] Gestione Test Plans e Test Sets ✅ (implementato)
-- [ ] Gestione Test Steps (add/update/remove)
-- [ ] Gestione Pre-conditions
-- [ ] Integrazione con Test Repositories (folder management)
-- [ ] Gestione Requirements e coverage tracking
-- [ ] Bulk import/export di test results
 
 ## Use Cases
 
-### Integrazione CI/CD
-Usa questo server MCP per:
-1. Creare test executions automaticamente nelle pipeline CI/CD
-2. Aggiornare stati dei test runs in base ai risultati dei test automatici
-3. Tracciare l'esecuzione dei test attraverso diversi ambienti
-4. Generare report di test execution per sprint reviews
+### CI/CD Integration
+Use this MCP server to:
+1. Automatically create test executions in CI/CD pipelines
+2. Update test run statuses based on automated test results
+3. Track test execution across different environments
+4. Generate test execution reports for sprint reviews
 
 ### Test Management
-Usa questo server MCP per:
-1. Creare e organizzare test cases
-2. Cercare test usando query JQL complesse
-3. Gestire test executions manuali
-4. Tracciare lo stato dei test nel tempo
+Use this MCP server to:
+1. Create and organize test cases
+2. Search tests using complex JQL queries
+3. Manage manual test executions
+4. Track test status over time
 
-## Licenza
+## License
 
 ISC
 
-## Supporto
+## Support
 
-Per problemi o domande sulle API di Xray Cloud, consulta la documentazione ufficiale:
+For issues or questions about Xray Cloud APIs, consult the official documentation:
 - https://docs.getxray.app/
 - https://support.getxray.app/
